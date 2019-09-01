@@ -35,6 +35,14 @@ ys_hg_prompt_info() {
 	fi
 }
 
+# Conda info
+local conda_info='$(conda_prompt_info)'
+conda_prompt_info(){
+	if [ -n "$CONDA_DEFAULT_ENV" ]; then
+	   echo -n "%{$fg[yellow]%}($CONDA_DEFAULT_ENV)%{$reset_color%}"
+	fi
+}
+
 local exit_code="%(?,,C:%{$fg[red]%}%?%{$reset_color%})"
 
 # Prompt format:
@@ -51,6 +59,8 @@ PROMPT="
 %(#,%{$bg[yellow]%}%{$fg[black]%}%n%{$reset_color%},%{$fg[cyan]%}%n) \
 %{$fg[white]%}@ \
 %{$fg[green]%}%m \
+%{$fg[white]%}@ \
+${conda_info} \
 %{$fg[white]%}in \
 %{$terminfo[bold]$fg[yellow]%}%~%{$reset_color%}\
 ${hg_info}\
